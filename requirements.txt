@@ -3,3 +3,4 @@ gunicorn
 qrcode[pill]
 Pillow
 django-crispy-forms
+whitenoise
