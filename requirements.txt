@@ -1,5 +1,5 @@
 Django>=4.2
 gunicorn
-qr code[pill]
+qrcode[pill]
 Pillow
 django-crispy-forms
