@@ -72,7 +72,7 @@ def product_list(request, category_slug=None):
         products = products.filter(
             Q(name__icontains=q) |
             Q(description__icontains=q) |
-            Q(category_name_icontains=q)
+            Q(category_name__icontains=q)
         )
 
     # ---------- SORT ----------
