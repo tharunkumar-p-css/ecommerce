@@ -390,9 +390,29 @@ color: #666;
 
 </div>
    
-   <div style="display:flex; gap:14px; margin-top:10px;">
-  <button class="btn btn-primary">🛒 Buy Now</button>
-  <a href="{% url 'shop:product_list' %}" class="btn btn-outline">← Back</a>
+   <div style="display:flex; gap:14px; margin-top:10px; flex-wrap:wrap;">
+
+  <!-- BUY NOW -->
+  <button type="submit"
+          class="btn btn-primary"
+          formaction="{% url 'shop:buy_now' product.id %}"
+          formmethod="post">
+    🛒 Buy Now
+  </button>
+
+  <!-- ADD TO CART -->
+  <button type="submit"
+          class="btn"
+          formaction="{% url 'shop:add_to_cart' product.id %}"
+          formmethod="post">
+    ➕ Add to Cart
+  </button>
+
+  <!-- BACK -->
+  <a href="{% url 'shop:product_list' %}" class="btn btn-outline">
+    ← Back
+  </a>
+
 </div>
 </form>
       
@@ -480,7 +500,7 @@ color: #666;
   {% csrf_token %}
   <input type="hidden" name="action" value="review">
 
-  <select name="rating" style="position:relative;left:175px;width:20px;top:8px;height:20px;">
+  <select name="rating">
     <option value="5">★★★★★ Excellent</option>
     <option value="4">★★★★ Good</option>
     <option value="3">★★★ Average</option>
@@ -490,7 +510,7 @@ color: #666;
    
 
     <input name="comment_text" placeholder="Write a review..." required style="position:relative;right:25px; top:8px;"></input>
-    <button type="submit" style="position:relative;left:10px; top:10px;width:60px;height:30px;">Post</button>
+    <button type="submit" style="position:relative;left:10px; top:8px;">Post</button>
   </form>
   {% else %}
     <p>Please login to write a review.</p>
