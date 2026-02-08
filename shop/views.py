@@ -411,7 +411,7 @@ def upi_qr(request):
 
     payload = (
         f"upi://pay?"
-        f"pa=demo@upi&"
+        f"pa=tharunkumar2124@okhdfcbank"
         f"pn=FUNNELWEB&"
         f"am={amount}&"
         f"cu=INR"
