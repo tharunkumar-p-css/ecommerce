@@ -746,3 +746,14 @@ def add_to_cart(request, product_id):
 
     item.save()
     return redirect("shop:cart")
+
+
+
+def about_page(request):
+    return render(request, "shop/about.html")
+
+def contact_page(request):
+    return render(request, "shop/contact.html")
+
+def terms_page(request):
+    return render(request, "shop/terms.html")
