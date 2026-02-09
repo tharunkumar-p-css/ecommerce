@@ -19,6 +19,7 @@ from .forms import (
 )
 from .models import ProductComment
 from django.db.models import Avg, Count
+from django.conf import settings
 
 
 
@@ -406,13 +407,26 @@ def checkout(request):
     })
 # ================= UPI QR CODE =================
 
+# ================= UPI QR CODE =================
+
 def upi_qr(request):
-    amount = request.GET.get('amount', '0')
+    amount = request.GET.get("amount", "0")
+    app = request.GET.get("app", "gpay")   # default gpay
+
+    if app == "phonepe":
+        upi_id = settings.PHONEPE_UPI_ID
+        name = "PhonePe"
+    elif app == "paytm":
+        upi_id = settings.PAYTM_UPI_ID
+        name = "Paytm"
+    else:
+        upi_id = settings.GPAY_UPI_ID
+        name = "GPay"
 
     payload = (
         f"upi://pay?"
-        f"pa=tharunkumar2124@okhdfcbank"
-        f"pn=FUNNELWEB&"
+        f"pa={upi_id}&"
+        f"pn={name}&"
         f"am={amount}&"
         f"cu=INR"
     )

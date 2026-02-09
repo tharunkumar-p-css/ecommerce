@@ -72,3 +72,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# ================= UPI SETTINGS =================
+GPAY_UPI_ID = "tharunkumar2124@okhdfcbank"
+PHONEPE_UPI_ID = "6382040121@ibl"
+PAYTM_UPI_ID = "8838897256@pthdfc"
