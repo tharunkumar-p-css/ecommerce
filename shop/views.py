@@ -73,7 +73,7 @@ def product_list(request, category_slug=None):
         products = products.filter(
             Q(name__icontains=q) |
             Q(description__icontains=q) |
-            Q(category__name__icontains=q)
+            Q(category_name_icontains=q)
         )
 
     # ---------- SORT ----------
@@ -296,19 +296,20 @@ def checkout(request):
     # ================= BUY NOW LOGIC =================
     buy_now_product_id = request.session.get("buy_now_product_id")
 
-    # If user clicked Buy Now
     if buy_now_product_id:
         product = get_object_or_404(Product, id=buy_now_product_id)
 
-        # Create a fake cart-like item list (so template works)
+        buy_now_qty = int(request.session.get("buy_now_qty", 1))
+        buy_now_size = request.session.get("buy_now_size")
+
         items = [{
             "product": product,
-            "quantity": 1,
-            "size": None,
-            "total_price": Decimal(str(product.get_display_price()))
+            "quantity": buy_now_qty,
+            "size": buy_now_size,
+            "total_price": Decimal(str(product.get_display_price())) * buy_now_qty
         }]
 
-        total = Decimal(str(product.get_display_price()))
+        total = Decimal(str(product.get_display_price())) * buy_now_qty
 
     else:
         # ================= NORMAL CART LOGIC =================
@@ -321,6 +322,9 @@ def checkout(request):
             Decimal(str(item.product.get_display_price())) * item.quantity
             for item in items
         )
+
+    # (rest of your checkout logic continues...)
+
 
     # ================= ORDER PLACE LOGIC =================
     if request.method == "POST":
@@ -405,8 +409,6 @@ def checkout(request):
         "items": items,
         "total": total,
     })
-# ================= UPI QR CODE =================
-
 # ================= UPI QR CODE =================
 
 def upi_qr(request):
@@ -729,23 +731,28 @@ def delete_comment(request, comment_id):
 
 
 @login_required(login_url="shop:login")
+@require_POST
 def buy_now(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
-    # Store only in session (NOT in cart table)
-    request.session['buy_now_product_id'] = product.id
-    request.session['buy_now_qty'] = 1
+    qty = int(request.POST.get("quantity", 1))
+    size = request.POST.get("size") or None
 
-    return redirect('shop:checkout')
+    request.session['buy_now_product_id'] = product.id
+    request.session['buy_now_qty'] = qty
+    request.session['buy_now_size'] = size
+
+    return redirect("shop:checkout")
 
 
 
 @require_POST
 @login_required(login_url="shop:login")
 def add_to_cart(request, product_id):
-
     session_key = _get_session_key(request)
     product = get_object_or_404(Product, id=product_id, available=True)
+
+    qty = int(request.POST.get("quantity", 1))
 
     item, created = CartItem.objects.get_or_create(
         session_key=session_key,
@@ -754,14 +761,12 @@ def add_to_cart(request, product_id):
     )
 
     if created:
-        item.quantity = 1
+        item.quantity = qty
     else:
-        item.quantity += 1
+        item.quantity += qty
 
     item.save()
     return redirect("shop:cart")
-
-
 
 def about_page(request):
     return render(request, "shop/about.html")
