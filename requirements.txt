@@ -4,3 +4,4 @@ qrcode[pill]
 Pillow
 django-crispy-forms
 whitenoise
+django-allauth
