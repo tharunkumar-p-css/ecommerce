@@ -5,3 +5,6 @@ Pillow
 django-crispy-forms
 whitenoise
 django-allauth
+requests
+PyJWT
+cryptography
