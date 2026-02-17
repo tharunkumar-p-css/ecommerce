@@ -7,7 +7,7 @@ SECRET_KEY = 'dev-secret-change-me'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["funnelweb-soku.onrender.com"]
 
 
 INSTALLED_APPS = [
