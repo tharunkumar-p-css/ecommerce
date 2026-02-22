@@ -36,6 +36,8 @@ class Product(models.Model):
 
     is_on_offer = models.BooleanField(default=False)
     offer_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    variant_group = models.CharField(max_length=100, blank=True, null=True)
+    color = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         ordering = ('-created_at',)

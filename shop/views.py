@@ -147,6 +147,12 @@ def offers_list(request):
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, available=True)
 
+
+    variants = Product.objects.filter(
+        variant_group=product.variant_group,
+        available=True
+    ).exclude(id=product.id)
+    
     # ================= QUICK VIEW =================
     if request.method == "GET" and request.GET.get("quick"):
         return render(request, "shop/_product_quick.html", {"product": product})
@@ -232,6 +238,7 @@ def product_detail(request, slug):
 # ================= FINAL RENDER =================
     return render(request, "shop/product_detail.html", {
     "product": product,
+    "variants":variants,
     "form": form,
     "comments": comments,
     "rating_rows": rating_rows,

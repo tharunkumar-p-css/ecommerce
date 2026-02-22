@@ -20,6 +20,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "price",
+        "color",
+        "variant_group",
         "offer_price",
         "is_on_offer",
         "available",
