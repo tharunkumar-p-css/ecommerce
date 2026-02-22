@@ -102,6 +102,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'shop' / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # ================= MEDIA FILES =================
@@ -138,3 +139,8 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 GPAY_UPI_ID = "tharunkumar2124@okhdfcbank"
 PHONEPE_UPI_ID = "6382040121@ibl"
 PAYTM_UPI_ID = "8838897256@pthdfc"
+
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = "DENY"
