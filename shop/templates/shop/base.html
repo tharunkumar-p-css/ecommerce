@@ -316,7 +316,7 @@
           <a href="{% url 'shop:product_list' %}" class="logo">🛒FUNNELWEB</a>
 
           <form action="{% url 'shop:product_list' %}" method="get" class="search" role="search" aria-label="Site search">
-            <input name="q" placeholder="Search for shoes  , jackets, watches..." value="{{ request.GET.q|default:'' }}" aria-label="Search">
+            <input name="q" placeholder="Search for footwear" value="{{ request.GET.q|default:'' }}" aria-label="Search">
             <button type="submit" aria-label="Search" class="nav-link" style="border-radius:999px;background:transparent;padding:6px 8px;"></button>
           </form>
 
