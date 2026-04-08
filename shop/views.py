@@ -1,7 +1,6 @@
 from decimal import Decimal
 from io import BytesIO
 import qrcode
-
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
@@ -20,17 +19,12 @@ from .forms import (
 from .models import ProductComment
 from django.db.models import Avg, Count
 from django.conf import settings
-
-
-
-
 # 🔐 AUTH IMPORTS (ADD THESE)
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
 from django.contrib import messages
-
 from .models import (
     Product,
     Category,
@@ -282,12 +276,11 @@ def cart_view(request):
     })
 
 
-@require_POST
+
 def cart_remove(request, item_id):
     session_key = _get_session_key(request)
     CartItem.objects.filter(id=item_id, session_key=session_key).delete()
     return redirect("shop:cart")
-
 
 
 # ================= CHECKOUT =================

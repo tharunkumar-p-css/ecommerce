@@ -96,11 +96,11 @@
             <!-- Remove form: POSTs to cart_remove view -->
             <form method="post" action="{% url 'shop:cart_remove' item.id %}" style="display:inline;">
               {% csrf_token %}
-              <button type="submit"
-                      class="btn"
-                      style="background:transparent;border:0;font-size:18px;cursor:pointer;"
-                      onclick="return confirm('Remove \"{{ item.product.name }}\" from cart?');"
-                      title="Remove item">❌</button>
+              <a href="{% url 'shop:cart_remove' item.id %}"
+   onclick="return confirm('Remove item?')"
+   style="color:red; font-size:18px;">
+   ❌
+</a>
             </form>
           </td>
         </tr>
@@ -115,7 +115,7 @@
 
     <div style="display:flex; gap:10px; align-items:center;">
       <a href="{% url 'shop:product_list' %}" class="btn">← Continue Shopping</a>
-      <button type="submit" class="btn" title="Update cart quantities">Add to cart</button>
+      <button type="submit" class="btn" title="Update cart quantities"></button>
       <div class="cart-actions">
   {% if user.is_staff %}
     <p style="color:#b91c1c; font-weight:600; margin-top:12px;">
